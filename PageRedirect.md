@@ -44,3 +44,34 @@ In an ASP.NET web form is the default page posted on itself whenever a button is
 
 The Cross Page posting technique allows a web form to post on another web form on button click. The PostbackUrl 
 property of the button is set to the page where you want to do cross-page posting.
+
+Exmaple
+
+- Code on Default.aspx
+
+<form id="form1" runat="server">  
+  
+   <asp:TextBox ID="txtName" name="data" runat="server" />
+  
+   <asp:Button Text="ClickPostBack" runat="server" PostBackUrl="~/Display.aspx" />  
+  
+</form> 
+
+- Code on Display.aspx
+
+<form id="form1" runat="server">  
+  
+   <asp:Label Text="text" name="lblValue" ID="lblValue" runat="server" /> 
+  
+</form>  
+
+- Display.aspx.cs
+
+protected void Page_Load(object sender, EventArgs e)  
+{  
+    if (PreviousPage != null && PreviousPage.IsCrossPagePostBack)   
+    {  
+        TextBox txtName = (TextBox) PreviousPage.FindControl("txtName");  
+        lblValue.Text = "Welcome " + txtName.Text;  
+    }  
+}
